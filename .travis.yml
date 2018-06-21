@@ -20,6 +20,7 @@ cache:
 before_install:
 - wget http://dl.google.com/android/android-sdk_r24.4.1-macosx.zip
 - unzip android-sdk_r24.4.1-macosx.zip
+- export M2_HOME=/usr/local/maven
 - export ANDROID_HOME=$PWD/android-sdk-macosx
 - export ZIPALIGN_HOME=$PWD/android-sdk-macosx/build-tools/23.0.3
 - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
@@ -34,6 +35,7 @@ install:
   - echo "$JAVA_HOME"
   - echo "$ANDROID_HOME"
   - echo "$ZIPALIGN_HOME"
+  - echo "$M2_HOME"
   - npm install
   - bower install
 script:
