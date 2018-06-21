@@ -36,11 +36,11 @@ before_install:
 - export PATH=${ANT_HOME}/bin:$PATH
 
 install:
-  - echo "$JAVA_HOME"
-  - echo "$ANDROID_HOME"
-  - echo "$ZIPALIGN_HOME"
-  - echo "$M2_HOME"
-  - echo "$ANT_HOME"
+  - cd "$JAVA_HOME"
+  - cd "$ANDROID_HOME"
+  - cd "$ZIPALIGN_HOME"
+  - cd "$M2_HOME"
+  - cd "$ANT_HOME"
   - npm install
   - bower install
 script:
