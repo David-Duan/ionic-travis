@@ -30,14 +30,17 @@ before_install:
 - echo yes | android update sdk --filter sysimg-23 --no-ui --force > /dev/null
 - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
 - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
+- wget --no-check-certificate https://www.apache.org/dist/ant/binaries/apache-ant-1.10.1-bin.tar.gz
+- tar -xzvf apache-ant-1.10.1-bin.tar.gz
+- export ANT_HOME=$PWD/apache-ant-1.10.1
+- export PATH=${ANT_HOME}/bin:$PATH
 
 install:
   - echo "$JAVA_HOME"
   - echo "$ANDROID_HOME"
   - echo "$ZIPALIGN_HOME"
   - echo "$M2_HOME"
-  - cd $M2_HOME
-  - ll
+  - echo "$ANT_HOME"
   - npm install
   - bower install
 script:
