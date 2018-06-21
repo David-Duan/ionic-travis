@@ -7,28 +7,8 @@ sudo: false
 language: node_js
 node_js:
   - "8"
-android:
-  components:
-    - tools
-    - android-$ANDROID_API
-    - platform-tools
-    - build-tools-$ANDROID_BUILD_TOOLS
-    - android-$EMULATOR_API_LEVEL
-    - extra-google-m2repository
-    - extra-android-m2repository # for design library
-    - addon-google_apis-google-19 # google play services
-    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
-    - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
-  licenses:
-    - android-sdk-preview-license-.+
-    - android-sdk-license-.+
-    - google-gdk-license-.+
 env:
   global:
-    - ANDROID_API=24
-    - EMULATOR_API=21
-    - ANDROID_BUILD_TOOLS=24.0.2
-    - ADB_INSTALL_TIMEOUT=5 # minutes
     - JAVA_HOME=/usr/lib/jvm/java-8-oracle
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -37,8 +17,23 @@ cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+before_install:
+- wget http://dl.google.com/android/android-sdk_r24.4.1-macosx.zip
+- unzip android-sdk_r24.4.1-macosx.zip
+- export ANDROID_HOME=$PWD/android-sdk-macosx
+- export ZIPALIGN_HOME=$PWD/android-sdk-macosx/build-tools/23.0.3
+- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+- echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
+- echo yes | android update sdk --filter android-23 --no-ui --force > /dev/null
+- echo yes | android update sdk --filter build-tools-23.0.3 --all --no-ui --force > /dev/null
+- echo yes | android update sdk --filter sysimg-23 --no-ui --force > /dev/null
+- echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
+- echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
+
 install:
+  - echo "$JAVA_HOME"
   - echo "$ANDROID_HOME"
+  - echo "$ZIPALIGN_HOME"
   - npm install
   - bower install
 script:
